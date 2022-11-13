@@ -37,4 +37,7 @@ yarn-error.log*
 # storybook
 storybook-static
 
-server/
+!server/
+
+server/*
+!server/go/
