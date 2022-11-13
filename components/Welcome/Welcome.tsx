@@ -1,4 +1,5 @@
-import { Title, Text, Anchor } from '@mantine/core';
+import { Anchor, Text, Title } from '@mantine/core';
+
 import useStyles from './Welcome.styles';
 
 export function Welcome() {
@@ -9,16 +10,11 @@ export function Welcome() {
       <Title className={classes.title} align="center" mt={100}>
         Welcome to{' '}
         <Text inherit variant="gradient" component="span">
-          Mantine
+          Report a scam
         </Text>
       </Title>
       <Text color="dimmed" align="center" size="lg" sx={{ maxWidth: 580 }} mx="auto" mt="xl">
-        This starter Next.js project includes a minimal setup for server side rendering, if you want
-        to learn more on Mantine + Next.js integration follow{' '}
-        <Anchor href="https://mantine.dev/guides/next/" size="lg">
-          this guide
-        </Anchor>
-        . To get started edit index.tsx file.
+      Welcome to report a scam. This project was created to document scams to help protect people. We may not be able to stop all scams but we can help people avoid them.
       </Text>
     </>
   );

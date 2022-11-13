@@ -8,7 +8,7 @@
     "analyze": "ANALYZE=true next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "export": "next build && next export",
+    "export": "next build && next export -o server/pb_public",
     "lint": "next lint",
     "jest": "jest",
     "jest:watch": "jest --watch",
@@ -34,6 +34,7 @@
     "dayjs": "^1.11.6",
     "embla-carousel-react": "^7.0.3",
     "next": "12.3.1",
+    "pocketbase": "^0.7.4",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
