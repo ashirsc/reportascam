@@ -17,7 +17,7 @@ jobs:
           go-version: 1.18
 
       - name: Build
-        run: go build server/go/pocketbase.go -o server/go/build/pocketbase -v
+        run: cd server/go && go build -o build/pocketbase -v
 
       - name: Deploy to azure
         uses: azure/webapps-deploy@v2
