@@ -5,21 +5,17 @@ pool:
    vmImage: 'ubuntu-latest'
 
 steps: 
-- task: GoTool@0
+- task: CmdLine@2
   inputs:
-    version: '1.18'
-- task: Go@0
-  inputs:
-    command: 'get'
-    arguments: '-d'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/server/go'
-- task: Go@0
-  inputs:
-    command: 'build'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/server/go'
+    script: |
+      yarn install      
+      yarn export
+
 - task: CopyFiles@2
   inputs:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
   inputs:
-     artifactName: drop
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'Reportascam static frontend'
+    publishLocation: 'Container'
