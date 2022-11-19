@@ -1,9 +1,9 @@
-import { Anchor, Box, Button, Text } from "@mantine/core";
+import { Anchor, Box, Button, NavLink as MantineNavLink, Text } from "@mantine/core";
 
 import Link from "next/link";
 import { useRouter } from 'next/router'
 
-export default function NavLink({ href, text }: { href: string; text: string }) {
+export default function NavLink({ href, text, mobileSize }: { href: string; text: string, mobileSize?: boolean }) {
     const router = useRouter()
 
     const isLinkActive = href === router.asPath
@@ -11,33 +11,20 @@ export default function NavLink({ href, text }: { href: string; text: string }) 
 
    
 
+
+
     return <Link href={href}>
-        {/* <Box
-            sx={(theme) => ({
-                // background: theme.fn.linearGradient(45, 'red', 'blue'),
-                background: isLinkActive ? theme.fn.gradient({from: 'indigo', to: "cyan"}) : (theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]),
-                textAlign: 'center',
-                padding: theme.spacing.xs,
-                borderRadius: theme.radius.md,
-                cursor: 'pointer',
-
-                '&:hover': {
-                    backgroundColor:
-                        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-                },
-            })}
-        >
-            <Text color={isLinkActive ? "white" : undefined}>
-
+        {mobileSize ? <MantineNavLink
+            variant={isLinkActive ? "light" : "subtle"}
+            label={text}
+            // icon={<IconActivity size={16} stroke={1.5} />}
+            // rightSection={<IconChevronRight size={12} stroke={1.5} />}
+            active={isLinkActive}
+        /> :
+            <Button variant={isLinkActive ? "gradient" : "subtle"}>
                 {text}
-            </Text>
-          
-
-        </Box> */}
-
-<Button variant={isLinkActive ? "gradient" : "subtle"}>
-      {text}
-    </Button>
+            </Button>
+        }
     </Link>
 
 }

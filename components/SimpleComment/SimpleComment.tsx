@@ -30,7 +30,7 @@ export function CommentSimple({ postedAt, body, platform, lost }: CommentSimpleP
                     </Text>
                 </div>
             </Group>
-            {!!lost && <Text size="sm" color="red">{lost}</Text>}
+            {!!lost && <Text weight={800} size="sm" color="red">${lost}</Text>}
             </Group>
             <Text className={classes.body} size="sm">
                 {body}

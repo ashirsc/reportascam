@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Input, Loader, Paper, Radio, Stack, Text, TextInput, Textarea, Title, Transition } from "@mantine/core";
+import { Button, Checkbox, Input, Loader, Paper, Radio, Stack, Text, TextInput, Textarea, Title, Transition } from "@mantine/core";
 import { IconAt, IconCurrencyDollar } from "@tabler/icons";
 
 import PocketBase from "pocketbase"
@@ -8,13 +8,6 @@ import styles from "./Notes.module.css"
 import { useClickOutside } from "@mantine/hooks";
 // import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-
-const scaleY = {
-  in: { opacity: 1, transform: 'scaleY(1)' },
-  out: { opacity: 0, transform: 'scaleY(0)' },
-  common: { transformOrigin: 'top' },
-  transitionProperty: 'transform, opacity',
-};
 
 export default function CreateNote() {
 
@@ -28,11 +21,12 @@ export default function CreateNote() {
   const [otherPlatform, setOtherPlatform] = useState("")
   const [description, setDescription] = useState('')
   const [lost, setLost] = useState('')
+  const [anonymous, setAnonymous] = useState(false)
 
   // const router = useRouter();
 
   const create = async () => {
-    const db = new PocketBase('https://reportascam.hirschi.dev');
+    const db = new PocketBase(process.env.NEXT_PUBLIC_HOST);
 
     setLoading(true)
 
@@ -72,6 +66,17 @@ export default function CreateNote() {
       <Title order={3} mb="lg" >Report a scam that happend to you</Title>
 
       <Stack spacing={"md"}>
+        <TextInput
+        disabled={anonymous}
+          label={"Name"}
+          description={( <Checkbox
+          pl={8}
+          py={2}
+            size="xs"
+            label="Report this anonymously"
+            onChange={(event) => setAnonymous(event.currentTarget.checked)}
+          />)}
+        />
 
         <Radio.Group
           value={platform}

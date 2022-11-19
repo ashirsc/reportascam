@@ -20,7 +20,8 @@ export default function NewScamPage() {
 
 
     const fetchScams = async () => {
-        const db = new PocketBase('https://reportascam.hirschi.dev');
+        console.log(`connection to ${process.env.HOST}`)
+        const db = new PocketBase(process.env.NEXT_PUBLIC_HOST);
 
 
         const records = await db.records.getFullList('notes', 200 /* batch size */, {

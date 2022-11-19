@@ -1,15 +1,17 @@
-import { Anchor, AppShell, ColorScheme, ColorSchemeProvider, Group, Header, MantineProvider, Navbar, Paper, Text, createStyles } from '@mantine/core';
+import { Anchor, AppShell, Box, Burger, ColorScheme, ColorSchemeProvider, Drawer, Group, Header, MantineProvider, MediaQuery, NavLink, Navbar, Paper, Text, createStyles } from '@mantine/core';
 import NextApp, { AppContext, AppProps } from 'next/app';
 import { getCookie, setCookie } from 'cookies-next';
 
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
+import CustomNavLink from '../components/NavLink/NavLink';
 import Head from 'next/head';
 import Link from 'next/link'
-import NavLink from '../components/NavLink/NavLink';
 import NavSearch from '../components/NavSearch/NavSearch';
 import { NotificationsProvider } from '@mantine/notifications';
 import { useState } from 'react';
+import { useViewportSize } from '@mantine/hooks';
 
+const useStyles = createStyles((theme, _params, getRef) => ({}))
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
   const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
@@ -19,6 +21,14 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
     setColorScheme(nextColorScheme);
     setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
   };
+
+  const { height, width } = useViewportSize();
+  const [smallMenuOpen, setSmallMenuOpen] = useState(false)
+
+  const { theme } = useStyles();
+
+  const mobileSize = width > theme.breakpoints.sm
+
 
 
 
@@ -43,17 +53,39 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
                     <Link href={"/"}>
                       <Text ml={"lg"}>Report a scam</Text>
                     </Link>
-                    <Group
-                      mt={0}
-                      mb={0}
-                    >
-                      <NavLink href="/report" text="Report"/>
-                      <NavLink href="/browse" text="Browse"/>
-                      <NavSearch />
-                     
-                     
-                      <ColorSchemeToggle />
-                    </Group>
+
+                    {mobileSize ?
+
+                      <Group
+                        mt={0}
+                        mb={0}
+                      >
+                        <CustomNavLink href="/report" text="Report" />
+                        <CustomNavLink href="/browse" text="Browse" />
+                        <NavSearch />
+
+
+                        <ColorSchemeToggle />
+                      </Group>
+                      : <>
+                        <Burger
+                          opened={smallMenuOpen}
+                          onClick={() => setSmallMenuOpen((o) => !o)}
+                          title={"Menu"}
+                        />
+                        <Drawer position="right"
+                          opened={smallMenuOpen}
+                          onClose={() => setSmallMenuOpen(false)}
+
+                        >
+                          <CustomNavLink href="/report" text="Report" mobileSize />
+                          <CustomNavLink href="/browse" text="Browse" mobileSize/>
+                        </Drawer>
+
+                      </>
+                    }
+
+
                   </Group>
                 </Header>
               }
